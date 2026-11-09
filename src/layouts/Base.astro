@@ -22,8 +22,8 @@ const { lang, title, description, canonical, rec } = Astro.props;
     <meta name="twitter:card" content="summary" data-rec="SEO-R003" />
     <meta name="theme-color" content="#F4F7F7" />
     <meta name="robots" content="noindex" />
-    <link rel="preload" href="/fonts/piazzolla-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={`${import.meta.env.BASE_URL}fonts/piazzolla-cyrillic-wght-normal.woff2`} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
     <slot name="head" />
     <style is:global>
       html { overflow-x: clip; }
