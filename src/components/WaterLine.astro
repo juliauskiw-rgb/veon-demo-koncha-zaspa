@@ -1,0 +1,19 @@
+---
+// «Лінія води»: 2 px full-bleed horizon in the brand blue. `draw` = "load" (hero) or "scroll" (reveal.ts).
+interface Props { draw?: "load" | "scroll"; class?: string; }
+const { draw = "scroll", class: cls } = Astro.props;
+---
+<div class:list={["waterline", `waterline--${draw}`, cls]} aria-hidden="true" data-reveal={draw === "scroll" ? "" : undefined}></div>
+
+<style>
+  .waterline { height: var(--line); width: 100%; background: var(--color-brand); transform-origin: 0 50%; }
+  .waterline--load { animation: draw-line var(--dur-line) var(--ease-out) both; }
+  .waterline--scroll { transition: transform 600ms var(--ease-out); }
+  :global(.js) .waterline--scroll:not(.is-visible) { opacity: 1; transform: scaleX(0); }
+  @keyframes draw-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .waterline--load { animation: none; }
+    .waterline--scroll { transition: none; }
+    :global(.js) .waterline--scroll:not(.is-visible) { transform: none; }
+  }
+</style>

@@ -1,0 +1,9 @@
+---
+// Section shell: id from the veon-concept `sections` list, optional data-rec link to recommendations.
+// Extra attributes (including the parent's style scope) are passed through to <section>.
+interface Props { id: string; rec?: string; class?: string; label?: string; [key: string]: unknown; }
+const { id, rec, class: cls, label, ...rest } = Astro.props;
+---
+<section id={id} data-rec={rec} class={cls} aria-label={label} {...rest}>
+  <slot />
+</section>

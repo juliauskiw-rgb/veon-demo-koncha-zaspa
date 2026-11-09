@@ -1,0 +1,89 @@
+---
+import Section from "../Section.astro";
+import WaterLine from "../WaterLine.astro";
+import FutureLink from "../FutureLink.astro";
+import { medManager, FUTURE } from "../../data/site";
+
+const profiles = ["кардіологія", "неврологія", "ортопедія і травматологія", "фізична реабілітація", "психотерапія"];
+const lines = [
+  {
+    title: "Санаторно-курортне лікування та профілактика",
+    items: ["санаторно-курортне лікування", "фізіотерапія", "амбулаторне лікування", "сімейний відпочинок"],
+    more: "Санаторне лікування",
+    wide: true,
+  },
+  {
+    title: "Діагностика",
+    items: ["функціональна діагностика", "УЗД", "лабораторія запаморочення", "електронейроміографія"],
+    more: "Діагностика",
+  },
+  {
+    title: "SPA",
+    items: ["Detox Day, Wellness-Day", "флоатинг і термо-SPA", "душ Шарко, Віші, підводний душ-масаж"],
+    more: "SPA-програми",
+  },
+];
+---
+<Section id="napryamy" class="napryamy" rec="U-R006">
+  <div class="air">
+    <div class="container grid napryamy__air">
+      <h2 class="h-section napryamy__h" data-reveal>Реабілітація, лікування, діагностика, SPA</h2>
+      <h3 class="napryamy__rehab h-section">Реабілітація</h3>
+      <div class="napryamy__profiles">
+        <ul class="tick-list profiles">
+          {profiles.map((p) => <li>{p}</li>)}
+        </ul>
+        <div class="napryamy__ask">
+          <p>Не впевнені, чи підходить ваш випадок? <a class="text-link nums" href={`tel:${medManager.phone.tel}`}>Запитати медичного менеджера: {medManager.phone.display}</a></p>
+          <FutureLink note={FUTURE}>Усе про реабілітацію</FutureLink>
+        </div>
+      </div>
+    </div>
+  </div>
+  <WaterLine />
+  <div class="shoal">
+    <div class="container grid napryamy__lines">
+      {lines.map((l) => (
+        <article class:list={["line-col", { "line-col--wide": l.wide }]}>
+          <h3 class="h-title">{l.title}</h3>
+          <ul class="tick-list">
+            {l.items.map((i) => <li>{i}</li>)}
+          </ul>
+          <FutureLink note={FUTURE}>{l.more}</FutureLink>
+        </article>
+      ))}
+      <p class="napryamy__also">Також: <FutureLink note={FUTURE}>Жіноче коло</FutureLink> і <FutureLink note={FUTURE}>конференц-сервіс</FutureLink></p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .napryamy__air { row-gap: var(--space-7); }
+  .napryamy__h { grid-column: 1 / span 8; }
+  .napryamy__rehab { grid-column: 1 / span 4; align-self: start; }
+  .napryamy__profiles { grid-column: 5 / -1; display: grid; gap: var(--space-6); }
+  .profiles { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, auto); grid-auto-flow: column; column-gap: var(--space-7); row-gap: var(--space-3); font-family: var(--font-display); font-size: var(--text-title); line-height: 1.2; }
+  .profiles li::before { top: 0.6em; }
+  .napryamy__ask { display: grid; gap: var(--space-2); justify-items: start; max-width: 60ch; }
+  .napryamy__ask p { color: var(--color-muted); }
+  .napryamy__ask .text-link { white-space: normal; }
+
+  .napryamy__lines { row-gap: var(--space-7); }
+  .line-col { grid-column: span 4; display: grid; align-content: start; gap: var(--space-4); }
+  .line-col--wide { grid-column: 1 / span 5; }
+  .line-col:nth-child(2) { grid-column: span 3; }
+  .line-col .tick-list { gap: var(--space-2); }
+  .line-col :global(.future-link) { justify-self: start; }
+  .napryamy__also { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--space-3); padding-top: var(--space-5); border-top: 1px solid var(--color-border); color: var(--color-muted); }
+
+  @media (max-width: 1023px) {
+    .napryamy__h, .napryamy__rehab, .napryamy__profiles { grid-column: 1 / -1; }
+    .napryamy__air { row-gap: var(--space-5); }
+    .line-col, .line-col--wide { grid-column: span 6; }
+    .line-col--wide { grid-column: 1 / -1; }
+  }
+  @media (max-width: 767px) {
+    .profiles { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-auto-flow: row; }
+    .line-col, .line-col--wide { grid-column: 1 / -1; }
+  }
+</style>

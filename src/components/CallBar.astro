@@ -1,0 +1,36 @@
+---
+// Phone-only bottom bar (U-R004): the script hides it while the hero is on screen. Without JS it simply stays visible.
+import Button from "./Button.astro";
+import { reception } from "../data/site";
+---
+<div class="callbar" data-callbar data-rec="U-R004">
+  <Button href={`tel:${reception.phones[0].tel}`} tone="water" full>Зателефонувати на ресепшн</Button>
+</div>
+
+<style>
+  .callbar { display: none; }
+  @media (max-width: 767px) {
+    .callbar {
+      display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      padding: var(--space-2) var(--space-4) calc(var(--space-2) + env(safe-area-inset-bottom));
+      background: var(--color-water); border-top: var(--line) solid var(--color-brand);
+      transition: transform 250ms var(--ease-out);
+    }
+    .callbar.is-hidden { transform: translateY(100%); visibility: hidden; transition: transform 250ms var(--ease-out), visibility 0s linear 250ms; }
+    :global(html.menu-open) .callbar { visibility: hidden; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .callbar, .callbar.is-hidden { transition: none; }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>("[data-callbar]");
+  const hero = document.getElementById("hero");
+  if (bar && hero && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(([entry]) => {
+      bar.classList.toggle("is-hidden", entry.isIntersecting);
+    }, { threshold: 0 });
+    io.observe(hero);
+  }
+</script>

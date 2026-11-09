@@ -1,0 +1,61 @@
+---
+import Section from "../Section.astro";
+import WaterLine from "../WaterLine.astro";
+import FutureLink from "../FutureLink.astro";
+import DistanceDiagram from "../DistanceDiagram.astro";
+import { FUTURE } from "../../data/site";
+
+const facts = [
+  "Лісопаркова зона на березі озер",
+  "Басейн",
+  "Тенісний корт і спортмайданчики",
+  "Скандинавська ходьба з інструкторами",
+  "Марковані маршрути територією",
+];
+---
+<Section id="terytoriya" class="terytoriya">
+  <div class="air air--after-shoal terytoriya__air">
+    <div class="container grid terytoriya__grid">
+      <h2 class="h-display terytoriya__h" data-reveal>46,5 гектара лісу й озер</h2>
+      <figure class="terytoriya__photo">
+        <img src="/img/ozero-mistok.webp" width="576" height="178" loading="lazy" decoding="async" alt="Осінній ліс і місток над озером" />
+      </figure>
+    </div>
+  </div>
+  <WaterLine />
+  <div class="water terytoriya__water">
+    <div class="container grid terytoriya__lower">
+      <div class="terytoriya__map">
+        <DistanceDiagram />
+      </div>
+      <div class="terytoriya__facts">
+        <ul class="rule-list terytoriya__list">
+          {facts.map((f) => <li>{f}</li>)}
+        </ul>
+        <FutureLink note={FUTURE}>Про санаторій</FutureLink>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .terytoriya__air { padding-bottom: 0; }
+  .terytoriya__grid { align-items: start; row-gap: var(--space-6); }
+  .terytoriya__h { grid-column: 1 / span 6; padding-bottom: var(--space-7); }
+  .terytoriya__photo { grid-column: 7 / -1; align-self: end; justify-self: end; width: 100%; max-width: 576px; margin: 0; }
+  .terytoriya__photo img { width: 100%; height: auto; aspect-ratio: 576 / 178; object-fit: cover; }
+
+  .terytoriya__water { padding-block: var(--space-9) var(--section-gap); }
+  .terytoriya__lower { row-gap: var(--space-8); align-items: start; }
+  .terytoriya__map { grid-column: 1 / span 5; }
+  .terytoriya__facts { grid-column: 7 / -1; display: grid; gap: var(--space-6); justify-items: start; }
+  .terytoriya__list { font-family: var(--font-display); font-size: var(--text-title); line-height: 1.2; width: 100%; }
+
+  @media (max-width: 1023px) {
+    .terytoriya__h, .terytoriya__photo, .terytoriya__map, .terytoriya__facts { grid-column: 1 / -1; }
+    .terytoriya__h { padding-bottom: 0; }
+  }
+  @media (max-width: 767px) {
+    .terytoriya__water { padding-block: var(--space-8) var(--section-gap); }
+  }
+</style>

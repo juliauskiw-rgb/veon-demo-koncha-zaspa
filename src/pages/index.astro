@@ -1,0 +1,46 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CallBar from "../components/CallBar.astro";
+import Hero from "../components/sections/Hero.astro";
+import Napryamy from "../components/sections/Napryamy.astro";
+import Terytoriya from "../components/sections/Terytoriya.astro";
+import Putivka from "../components/sections/Putivka.astro";
+import Komanda from "../components/sections/Komanda.astro";
+import Kontakty from "../components/sections/Kontakty.astro";
+import { reception, socials } from "../data/site";
+
+const title = "Санаторій «Конча-Заспа» — реабілітація в лісі, Київ";
+const description = "Державний санаторій у лісі на березі озер у Києві: реабілітація, санаторне лікування, діагностика, SPA. Путівки від 12 днів. Ресепшн щодня 8:00–20:00.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalOrganization", "LodgingBusiness"],
+  name: "Санаторій «Конча-Заспа»",
+  description,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Столичне шосе, 215",
+    postalCode: "03131",
+    addressLocality: "Київ",
+    addressCountry: "UA",
+  },
+  telephone: reception.phones[0].tel,
+  email: reception.email,
+  openingHours: "Mo-Su 08:00-20:00",
+  sameAs: socials.map((s) => s.href),
+};
+---
+<Base lang="uk" title={title} description={description} rec="P-R001,P-R002,P-R003,P-R004,P-R007,U-R014,U-R020,SEO-R007">
+  <script slot="head" type="application/ld+json" data-rec="SEO-R004,S-R016" set:html={JSON.stringify(jsonLd)} />
+  <Header slot="header" />
+  <Hero />
+  <Napryamy />
+  <Terytoriya />
+  <Putivka />
+  <Komanda />
+  <Kontakty />
+  <Footer slot="footer" />
+  <CallBar slot="footer" />
+</Base>

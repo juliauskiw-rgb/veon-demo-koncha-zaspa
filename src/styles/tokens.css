@@ -1,0 +1,109 @@
+/* Hallmark · shape: horizon split, every section cut by one full-bleed waterline (place above, medicine below) · genre: editorial · theme: custom · job: book · idea: "Лінія води: над горизонталлю озера місце, під нею медицина й номер ресепшну" · vibe: "тихо, точно, державно, вода й ліс"
+ * paper: #F4F7F7 · accent: #1E9BE6 · display: Piazzolla · body: Sofia Sans · hero: H1-антиква стоїть на блакитній лінії, під нею темна вода з кнопкою і номерами ресепшну · nav: sticky single row, wordmark left, five anchors, reception number and call button right, hairline after scroll; burger panel on water under 1180px · footer: light band under a waterline, name, socials, e-mail, future pages in one row · imagery: one client photo (autumn lake and footbridge, cropped from the audit screenshots of the client site) above the waterline in Територія; more client photos in FULL · signature: тиха антиква на блакитній лінії горизонту, під нею глибока вода з номером ресепшну
+ * axes: light/roman-serif/chromatic-blue · posture: committed (water #0F3D4F is a surface colour) · surface: absolute · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4 · weakest: S, без фото місце передане лише числом і словами; додано схему відстані 20 км у межах Києва як діаграму реальних даних */
+/* Hallmark · waive 7b · stamp declares surface: absolute; contrast pairs pass · white is the approved surface of the room plate and the ink on the dark water, both from the concept palette */
+/* Hallmark · answered F4 · one primary action (call the reception) drawn in two tones: brand blue on the water, action blue on the fog; never side by side */
+/* Hallmark · answered F20 · the five rehabilitation profiles run down two columns, three then two; the fifth closes a column, not an orphan row */
+/* Hallmark · dismissed 28a · the only image sits in the third section (Територія), far below the fold; the LCP is the hero H1 text, so the lazy photo stays lazy */
+/* Client design tokens from design/concept.md (veon-concept: colors, fonts). */
+
+@font-face {
+  font-family: "Piazzolla";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/fonts/piazzolla-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Piazzolla";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/fonts/piazzolla-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Sofia Sans";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/sofia-sans-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Sofia Sans";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/sofia-sans-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Палітра «Лінія води» */
+  --color-bg: #F4F7F7;            /* туман над озером */
+  --color-surface: #FFFFFF;       /* плита фактів */
+  --color-text: #0D2530;          /* озерне чорнило */
+  --color-muted: #4A5F68;
+  --color-water: #0F3D4F;         /* глибока вода: темні блоки, меню */
+  --color-on-water: #FFFFFF;
+  --color-on-water-muted: #B9D3DC;
+  --color-brand: #1E9BE6;         /* лінія води, кнопка на воді */
+  --color-brand-ink: #0D2530;     /* текст на блакитному */
+  --color-brand-hover: color-mix(in oklab, #1E9BE6 82%, #FFFFFF);
+  --color-action: #0A6BB0;        /* дія на світлому */
+  --color-action-hover: color-mix(in oklab, #0A6BB0 86%, #0D2530);
+  --color-action-ink: #FFFFFF;
+  --color-focus: #0A6BB0;
+  --color-focus-water: #5FC0F5;
+  --color-bark: #A4492A;          /* теплий теракот: лише датовані умови */
+  --color-border: #C9D6DA;
+  --color-water-rule: color-mix(in oklab, #B9D3DC 30%, #0F3D4F);
+  --color-accent: var(--color-focus);
+
+  /* Шрифти */
+  --font-display: "Piazzolla", Georgia, serif;
+  --font-body: "Sofia Sans", system-ui, sans-serif;
+
+  /* Шкала (390 → 1440): 40/88, 32/56, 24/30, 19/22, 17/18, 14/15 */
+  --text-display: clamp(2.5rem, 1.38rem + 4.6vw, 5.5rem);
+  --text-section: clamp(2rem, 1.44rem + 2.3vw, 3.5rem);
+  --text-title: clamp(1.5rem, 1.36rem + 0.57vw, 1.875rem);
+  --text-lede: clamp(1.1875rem, 1.12rem + 0.29vw, 1.375rem);
+  --text-body: clamp(1.0625rem, 1.04rem + 0.1vw, 1.125rem);
+  --text-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+
+  /* Ритм 4/8 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 120px;
+  --space-11: 144px;
+  --gutter: clamp(20px, 0.4rem + 4vw, 64px);
+  --space: var(--gutter);
+  --container: 1320px;
+  --section-gap: clamp(64px, 2rem + 6vw, 120px);
+
+  --radius: 2px;
+  --line: 2px;
+  --header-h: 88px;
+  --control: 52px;
+  --control-sm: 48px;
+
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 500ms;
+  --dur-line: 700ms;
+  --dur-fast: 180ms;
+}
+
+@media (max-width: 767px) {
+  :root { --header-h: 72px; }
+}

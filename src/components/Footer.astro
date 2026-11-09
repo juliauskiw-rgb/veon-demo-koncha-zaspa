@@ -1,0 +1,39 @@
+---
+import WaterLine from "./WaterLine.astro";
+import FutureLink from "./FutureLink.astro";
+import { socials, generalEmail, FUTURE } from "../data/site";
+const future = ["Новини", "Відгуки", "Про санаторій", "Політика конфіденційності"];
+---
+<footer class="site-footer">
+  <WaterLine />
+  <div class="container grid footer__grid">
+    <p class="footer__name">Санаторій «Конча-Заспа»</p>
+    <ul class="footer__social" aria-label="Соціальні мережі" data-rec="S-R016">
+      {socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener" aria-label={`${s.name} санаторію «Конча-Заспа» (відкриється в новій вкладці)`}>{s.name}</a></li>)}
+    </ul>
+    <a class="footer__mail" href={`mailto:${generalEmail}`}>{generalEmail}</a>
+    <ul class="footer__future" aria-label="Інші розділи">
+      {future.map((f) => <li><FutureLink note={FUTURE}>{f}</FutureLink></li>)}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--color-bg); }
+  .footer__grid { row-gap: var(--space-5); align-items: center; padding-block: var(--space-7) var(--space-8); }
+  .footer__name { grid-column: 1 / span 3; font-family: var(--font-display); font-size: var(--text-lede); font-weight: 500; }
+  .footer__social { grid-column: 4 / span 4; display: flex; flex-wrap: wrap; column-gap: var(--space-6); }
+  .footer__social a, .footer__mail { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .footer__social a:hover, .footer__mail:hover { color: var(--color-action); text-decoration: underline; text-underline-offset: 0.2em; }
+  .footer__social a:active, .footer__mail:active { color: var(--color-text); }
+  .footer__mail { grid-column: 8 / span 2; justify-self: start; }
+  .footer__future { grid-column: 1 / -1; display: flex; flex-wrap: wrap; column-gap: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-border); font-size: var(--text-small); }
+  .footer__future :global(.future-link) { white-space: nowrap; }
+
+  @media (max-width: 1023px) {
+    .footer__name, .footer__social, .footer__mail { grid-column: 1 / -1; }
+  }
+  @media (max-width: 767px) {
+    .footer__grid { padding-bottom: calc(var(--space-8) + var(--control) + var(--space-4)); }
+  }
+</style>

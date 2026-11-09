@@ -1,0 +1,33 @@
+---
+// Call-to-action link. tone "water" sits on the dark water, "light" on the fog background.
+import PhoneIcon from "./PhoneIcon.astro";
+interface Props { href: string; tone?: "water" | "light"; icon?: boolean; full?: boolean; class?: string; rec?: string; [key: string]: unknown; }
+const { href, tone = "light", icon = true, full = false, class: cls, rec, ...rest } = Astro.props;
+---
+<a href={href} class:list={["btn", `btn--${tone}`, { "btn--full": full }, cls]} data-rec={rec} {...rest}>
+  {icon && <PhoneIcon class="btn__icon" size={20} />}
+  <span><slot /></span>
+</a>
+
+<style>
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3);
+    min-height: var(--control); padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius); font-family: var(--font-body); font-size: var(--text-body); font-weight: 600; line-height: 1.2;
+    text-decoration: none; white-space: nowrap; cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .btn--full { display: flex; width: 100%; }
+  .btn__icon { flex: none; transition: transform var(--dur-fast) var(--ease-out); }
+  .btn--water { background: var(--color-brand); color: var(--color-brand-ink); }
+  .btn--water:hover { background: var(--color-brand-hover); }
+  .btn--water:focus-visible { outline-color: var(--color-focus-water); }
+  .btn--light { background: var(--color-action); color: var(--color-action-ink); }
+  .btn--light:hover { background: var(--color-action-hover); }
+  .btn:hover .btn__icon { transform: translateX(3px); }
+  .btn:active { background: var(--color-text); color: var(--color-bg); }
+  .btn--water:active { background: var(--color-on-water); color: var(--color-text); }
+  .btn:active .btn__icon { transform: none; }
+  @media (hover: none) { .btn:hover .btn__icon { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .btn, .btn__icon { transition: none; } .btn:hover .btn__icon { transform: none; } }
+</style>

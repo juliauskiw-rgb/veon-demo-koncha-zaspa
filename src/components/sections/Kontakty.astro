@@ -1,0 +1,70 @@
+---
+import Section from "../Section.astro";
+import Button from "../Button.astro";
+import { reception, medManager, address } from "../../data/site";
+---
+<Section id="kontakty" class="kontakty" rec="U-R001">
+  <div class="air kontakty__air">
+    <div class="container grid kontakty__grid">
+      <h2 class="h-section kontakty__h" data-reveal>Як зв’язатися і доїхати</h2>
+
+      <article class="role role--main">
+        <h3 class="h-title">{reception.role}</h3>
+        <p class="role__task">{reception.task}, {reception.hours}</p>
+        <p class="role__phones">
+          {reception.phones.map((p) => <a class="tel role__tel" href={`tel:${p.tel}`}><span class="visually-hidden">Тел. </span>{p.display}</a>)}
+        </p>
+        <a class="text-link role__mail" href={`mailto:${reception.email}`}>{reception.email}</a>
+      </article>
+
+      <article class="role">
+        <h3 class="h-title">{medManager.role}</h3>
+        <p class="role__task">{medManager.task}, {medManager.hours}</p>
+        <p class="role__phones">
+          <a class="tel role__tel" href={`tel:${medManager.phone.tel}`}><span class="visually-hidden">Тел. </span>{medManager.phone.display}</a>
+        </p>
+        <a class="text-link role__mail" href={`mailto:${medManager.email}`}>{medManager.email}</a>
+      </article>
+
+      <article class="role role--address">
+        <h3 class="h-title">Адреса</h3>
+        <address class="role__address">{address.postal}, {address.line}</address>
+        <p class="role__route">{address.route}</p>
+        <a class="text-link" href={address.map} target="_blank" rel="noopener" data-rec="U-R012">Відкрити на карті<span class="visually-hidden"> (нова вкладка)</span></a>
+      </article>
+
+      <div class="kontakty__close">
+        <p class="kontakty__close-text h-title">Забронювати путівку можна телефоном ресепшну.</p>
+        <Button href={`tel:${reception.phones[0].tel}`} tone="light">Зателефонувати на ресепшн</Button>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .kontakty__air { padding-bottom: var(--section-gap); }
+  .kontakty__grid { row-gap: var(--space-8); }
+  .kontakty__h { grid-column: 1 / -1; }
+  .role { grid-column: span 4; display: grid; gap: var(--space-2); align-content: start; justify-items: start; padding-top: var(--space-5); border-top: 1px solid var(--color-border); }
+  .role--main { border-top: var(--line) solid var(--color-brand); }
+  .role__task, .role__route { color: var(--color-muted); }
+  .role__route { max-width: 40ch; }
+  .role__phones { display: grid; justify-items: start; margin-top: var(--space-2); }
+  .role__tel { font-size: var(--text-title); line-height: 1.2; }
+  .role__address { font-style: normal; font-size: var(--text-lede); }
+  .role__mail { overflow-wrap: anywhere; }
+
+  .kontakty__close { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: var(--space-7); row-gap: var(--space-5); padding-top: var(--space-7); border-top: 1px solid var(--color-border); }
+  .kontakty__close-text { font-weight: 400; max-width: 32ch; }
+
+  @media (max-width: 1023px) {
+    .kontakty__h { grid-column: 1 / -1; }
+    .role { grid-column: span 6; }
+    .role--address { grid-column: 1 / -1; }
+  }
+  @media (max-width: 767px) {
+    .kontakty__grid { row-gap: var(--space-7); }
+    .role, .role--address { grid-column: 1 / -1; }
+    .kontakty__close :global(.btn) { display: flex; width: 100%; }
+  }
+</style>

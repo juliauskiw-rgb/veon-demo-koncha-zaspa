@@ -1,0 +1,56 @@
+---
+import Section from "../Section.astro";
+import WaterLine from "../WaterLine.astro";
+import FutureLink from "../FutureLink.astro";
+import { medManager, FUTURE } from "../../data/site";
+
+// B-F011: roles from the doctors page; names and portraits wait for the client (U-R010).
+const team = [
+  "фізичні терапевти",
+  "лікар фізичної та реабілітаційної медицини",
+  "пульмонолог, кандидат медичних наук",
+  "психолог",
+  "ерготерапевт",
+  "логопед-афазіолог",
+];
+---
+<Section id="komanda" class="komanda" rec="U-R009">
+  <div class="air air--after-shoal">
+    <div class="container grid komanda__air">
+      <h2 class="h-section komanda__h" data-reveal>15 лікарів-спеціалістів і команда реабілітації</h2>
+      <p class="komanda__figures">Усього в санаторії працює <span class="nowrap">близько 200</span> співробітників.</p>
+    </div>
+  </div>
+  <WaterLine />
+  <div class="water komanda__water">
+    <div class="container grid komanda__lower">
+      <h3 class="h-title komanda__team-h">Склад команди реабілітації</h3>
+      <ul class="rule-list komanda__list">
+        {team.map((t) => <li>{t}</li>)}
+      </ul>
+      <p class="komanda__links">
+        <a class="text-link" href={`tel:${medManager.phone.tel}`}>Запитати медичного менеджера</a>
+        <FutureLink note={FUTURE}>Усі лікарі</FutureLink>
+      </p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .komanda__air { row-gap: var(--space-5); align-items: start; }
+  .komanda__h { grid-column: 1 / span 8; }
+  .komanda__figures { grid-column: 1 / span 7; font-size: var(--text-lede); color: var(--color-muted); max-width: 52ch; }
+
+  .komanda__water { padding-top: var(--space-8); }
+  .komanda__lower { row-gap: var(--space-7); align-items: start; }
+  .komanda__team-h { grid-column: 1 / span 4; font-weight: 400; color: var(--color-on-water-muted); }
+  .komanda__list { grid-column: 5 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-7); font-size: var(--text-title); font-weight: 400; line-height: 1.25; }
+  .komanda__links { grid-column: 5 / -1; display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--space-7); row-gap: var(--space-2); }
+
+  @media (max-width: 1023px) {
+    .komanda__h, .komanda__figures, .komanda__team-h, .komanda__list, .komanda__links { grid-column: 1 / -1; }
+  }
+  @media (max-width: 767px) {
+    .komanda__list { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

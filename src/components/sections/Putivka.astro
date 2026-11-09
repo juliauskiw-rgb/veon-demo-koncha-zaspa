@@ -1,0 +1,81 @@
+---
+import Section from "../Section.astro";
+import WaterLine from "../WaterLine.astro";
+import FutureLink from "../FutureLink.astro";
+import Button from "../Button.astro";
+import { reception, FUTURE } from "../../data/site";
+
+const rooms = [
+  { title: "Одномісні та двомісні", items: "I корпус, II корпус, II корпус (I поверх), покращені" },
+  { title: "Дво- й трикімнатні", items: "двокімнатні: стандарт, «люкс», тримісний; трикімнатний люкс" },
+];
+// Dated promotion B-F014: shown only until 30.11.2026 inclusive (build date check).
+const promoActive = new Date() <= new Date("2026-11-30T23:59:59+02:00");
+---
+<Section id="putivka" class="putivka">
+  <div class="air">
+    <div class="container grid putivka__air">
+      <h2 class="h-section putivka__h" data-reveal>Що входить у путівку</h2>
+      <p class="putivka__answer h-title">Проживання, базове лікування і повний пансіон — від 12 днів</p>
+      <div class="putivka__terms">
+        <p class="putivka__note">Знижка 20% особам з інвалідністю та дітям <span class="nowrap">4–18 років</span></p>
+        {promoActive && (
+          <p class="putivka__note putivka__note--dated" data-rec="U-R018">«Осінь — час подбати про себе»: −15% на проживання в обраних категоріях до <time datetime="2026-11-30">30.11.2026</time></p>
+        )}
+      </div>
+    </div>
+  </div>
+  <WaterLine />
+  <div class="shoal putivka__shoal">
+    <div class="container">
+      <div class="plate grid" data-rec="U-R008">
+        <div class="plate__rooms">
+          <h3 class="h-title plate__h">147 номерів, 226 місць</h3>
+          <dl class="rooms">
+            {rooms.map((r) => (
+              <div class="rooms__row">
+                <dt>{r.title}</dt>
+                <dd>{r.items}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <div class="plate__price">
+          <p>Вартість і вільні дати називає ресепшн.</p>
+          <Button href={`tel:${reception.phones[0].tel}`} tone="light">Дізнатися вартість і дати</Button>
+          <p class="futures"><FutureLink note={FUTURE}>Усі ціни</FutureLink><FutureLink note={FUTURE}>Номери</FutureLink><FutureLink note={FUTURE}>Акції</FutureLink></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .putivka__air { row-gap: var(--space-6); align-items: end; }
+  .putivka__h { grid-column: 1 / span 7; }
+  .putivka__answer { grid-column: 1 / span 7; font-weight: 400; max-width: 30ch; }
+  .putivka__terms { grid-column: 9 / -1; grid-row: 1 / span 2; align-self: end; display: grid; gap: var(--space-4); }
+  .putivka__note { padding-left: var(--space-4); border-left: var(--line) solid var(--color-bark); color: var(--color-bark); font-weight: 600; }
+
+  .putivka__shoal { padding-top: var(--space-7); }
+  .plate { background: var(--color-surface); padding: var(--space-8); row-gap: var(--space-7); border: 1px solid var(--color-border); }
+  .plate__rooms { grid-column: 1 / -1; display: grid; gap: var(--space-5); align-content: start; }
+  .rooms { margin: 0; display: grid; }
+  .rooms__row { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--space-5); row-gap: var(--space-1); padding-block: var(--space-4); border-top: 1px solid var(--color-border); }
+  .rooms dt { font-weight: 600; }
+  .rooms dd { margin: 0; color: var(--color-muted); }
+  .plate__price { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--space-6); row-gap: var(--space-4); padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
+  .plate__price > p:first-child { font-size: var(--text-lede); }
+  .plate__price .futures { margin-left: auto; }
+
+  @media (max-width: 1023px) {
+    .putivka__h, .putivka__answer, .putivka__terms { grid-column: 1 / -1; grid-row: auto; }
+    .rooms__row { grid-template-columns: minmax(0, 1fr); }
+    .plate { padding: var(--space-6); }
+    .plate__price .futures { margin-left: 0; }
+  }
+  @media (max-width: 767px) {
+    .plate { padding: var(--space-5) var(--space-4); }
+    .plate__price :global(.btn) { display: flex; width: 100%; }
+  }
+</style>
