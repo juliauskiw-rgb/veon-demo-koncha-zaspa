@@ -1,69 +1,123 @@
 ---
 import Section from "../Section.astro";
 import Button from "../Button.astro";
+import Picture from "../Picture.astro";
 import WaterLine from "../WaterLine.astro";
 import { reception, medManager } from "../../data/site";
 const main = reception.phones[0];
+const figures = [
+  { n: "60+", t: "років лікуємо й відновлюємо" },
+  { n: "46,5 га", t: "лісу й озер у межах Києва" },
+  { n: "147", t: "номерів на 226 місць" },
+  { n: "15", t: "лікарів-спеціалістів" },
+];
 ---
 <Section id="hero" class="hero" rec="U-R003,S-R015,SEO-R001">
-  <div class="hero__air">
-    <div class="container grid hero__air-grid">
-      <h1 class="hero__title h-display">Реабілітація та санаторне лікування серед лісу й озер у Києві</h1>
-      <p class="hero__lede lede">Державний санаторій із вищою категорією акредитації. Понад 60 років, 46,5 га, близько 20 км від центру міста.</p>
+  <div class="container grid hero__grid">
+    <h1 class="hero__title h-display">Реабілітація та санаторне лікування серед лісу й озер у Києві</h1>
+    <p class="hero__lede lede">Державний санаторій вищої категорії акредитації. Ліс, озера й лікування приблизно за 20 км від центру міста.</p>
+
+    <div class="hero__row">
+    <figure class="hero__photo photo">
+      <Picture
+        name="hero-korpus" width={615} height={332} eager
+        mobile={{ name: "hero-korpus-m", width: 395, height: 332 }}
+        alt="Корпус санаторію серед дубів"
+      />
+    </figure>
+
+    <div class="hero__card" data-rec="U-R001,S-R015">
+      <div class="hero__info">
+      <span class="hero__role">{reception.role}: путівки й бронювання</span>
+      <div class="hero__phones">
+        {reception.phones.map((p) => <a class="tel hero__tel" href={`tel:${p.tel}`}><span class="visually-hidden">Тел. </span>{p.display}</a>)}
+      </div>
+      <span class="hero__hours">{reception.hours}</span>
+      </div>
+      <div class="hero__act">
+      <Button href={`tel:${main.tel}`} tone="brand" full class="hero__btn" data-rec="U-R004">Зателефонувати на ресепшн</Button>
+      <span class="hero__med">Питання про лікування: медичний менеджер <a class="tel hero__med-tel" href={`tel:${medManager.phone.tel}`}><span class="visually-hidden">Тел. </span>{medManager.phone.display}</a>, <span class="nowrap">{medManager.hours}</span></span>
+      </div>
+    </div>
     </div>
   </div>
-  <WaterLine draw="load" />
-  <div class="hero__water water" data-rec="U-R001,S-R015">
-    <div class="container grid hero__water-grid">
-      <div class="hero__cta">
-        <Button href={`tel:${main.tel}`} tone="water" class="hero__btn" data-rec="U-R004">Зателефонувати на ресепшн</Button>
-      </div>
-      <div class="hero__contacts">
-        <p class="hero__phones">
-          {reception.phones.map((p) => <a class="tel hero__tel" href={`tel:${p.tel}`}><span class="visually-hidden">Тел. </span>{p.display}</a>)}
-        </p>
-        <p class="hero__role">{reception.role}: путівки й бронювання, {reception.hours}</p>
-        <p class="hero__med small">Питання про лікування: медичний менеджер<br /><a class="tel" href={`tel:${medManager.phone.tel}`}><span class="visually-hidden">Тел. </span>{medManager.phone.display}</a>, {medManager.hours}</p>
-      </div>
+
+  <div class="figures" aria-label="Санаторій у цифрах" role="group">
+    <WaterLine draw="load" />
+    <div class="container">
+      <ul class="figures__list">
+        {figures.map((f, i) => (
+          <li class="figure" style={`--i: ${i}`}>
+            <span class="figure__n nums">{f.n}</span>
+            <span class="figure__t">{f.t}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </Section>
 
 <style>
-  .hero { display: flex; flex-direction: column; min-height: calc(100svh - 72px); }
-  .hero__air { flex: 1 0 auto; display: flex; align-items: flex-end; }
-  .hero__air-grid { width: min(100% - 2 * var(--gutter), var(--container)); padding-block: var(--space-9) var(--space-7); row-gap: var(--space-5); }
-  .hero__title { grid-column: 1 / span 11; line-height: 1.02; }
-  .hero__lede { grid-column: 1 / span 7; color: var(--color-muted); }
+  .hero__grid { padding-top: var(--space-5); row-gap: var(--space-5); align-items: end; }
+  .hero__title { grid-column: 1 / span 8; }
+  .hero__lede { grid-column: 9 / -1; font-size: var(--text-lede); }
+  /* The photo never grows past its natural 615 x 332 px; the call card takes the rest of the row. */
+  .hero__row { display: grid; grid-template-columns: minmax(0, 615px) minmax(0, 1fr); gap: var(--space-5); }
+  .hero__photo { width: 100%; max-width: 615px; aspect-ratio: 615 / 332; border-radius: var(--radius-lg); }
+  .hero__photo :global(img) { object-position: 40% 50%; animation: hero-settle 900ms var(--ease-out) both; }
+  .hero__card {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); align-items: end; gap: var(--space-5);
+    padding: var(--space-6); border-radius: var(--radius-lg);
+    background: var(--color-deep); color: var(--color-on-deep);
+    animation: hero-card 500ms var(--ease-out) 120ms both;
+  }
+  .hero__card :focus-visible { outline-color: var(--color-focus-deep); }
+  .hero__info, .hero__act { display: flex; flex-direction: column; gap: var(--space-2); }
+  .hero__role { font-size: var(--text-small); color: var(--color-on-deep-muted); }
+  .hero__phones { display: grid; justify-items: start; }
+  .hero__tel { font-family: var(--font-display); font-size: var(--text-phone); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+  .hero__hours { color: var(--color-on-deep); }
+  .hero__med { font-size: var(--text-small); color: var(--color-on-deep-muted); }
+  .hero__med-tel { min-height: 24px; color: var(--color-on-deep); }
+  .hero__med-tel::after { bottom: 0; }
 
-  .hero__water { flex: none; padding-block: var(--space-7) var(--space-8); }
-  .hero__water-grid { row-gap: var(--space-5); align-items: start; }
-  .hero__cta { grid-column: 1 / span 5; }
-  .hero__contacts { grid-column: 6 / -1; display: grid; gap: var(--space-2); padding-top: var(--space-1); }
-  .hero__phones { display: flex; flex-wrap: wrap; column-gap: var(--space-7); }
-  .hero__tel { font-size: var(--text-title); font-weight: 400; line-height: 1.2; }
-  .hero__role { color: var(--color-on-water); }
-  .hero__med { color: var(--color-on-water-muted); margin-top: var(--space-2); }
-  .hero__contacts { animation: hero-fade 500ms var(--ease-out) 200ms both; }
-  @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
+  .figures { margin-top: var(--space-6); background: var(--color-sand); }
+  .figures__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-block: var(--space-5) var(--space-6); }
+  .figure { display: grid; gap: var(--space-2); align-content: start; padding-inline: var(--space-5); border-left: 1px solid var(--color-border); }
+  .figure:first-child { padding-left: 0; border-left: 0; }
+  .figure::before { content: ""; width: 32px; height: 3px; background: var(--color-brand); margin-bottom: var(--space-2); transform-origin: 0 50%; animation: tick 300ms var(--ease-out) both; animation-delay: calc(700ms + var(--i) * 60ms); }
+  .figure__n { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .figure__t { font-size: var(--text-small); color: var(--color-muted); }
 
+  @keyframes hero-settle { from { transform: scale(1.06); } to { transform: scale(1); } }
+  @keyframes hero-card { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes tick { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  @media (max-width: 1179px) {
+    .hero__card { grid-template-columns: minmax(0, 1fr); align-content: space-between; }
+  }
   @media (max-width: 1023px) {
-    .hero__title { grid-column: 1 / -1; }
-    .hero__lede { grid-column: 1 / span 10; }
-    .hero__cta, .hero__contacts { grid-column: 1 / -1; }
+    .hero__title, .hero__lede { grid-column: 1 / -1; }
+    .hero__row { grid-template-columns: minmax(0, 1fr); }
+    .hero__card { grid-template-columns: minmax(0, 1fr) minmax(0, 320px); }
+    .figures__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-6); }
+    .figure:nth-child(3) { padding-left: 0; border-left: 0; }
   }
   @media (max-width: 767px) {
-    .hero { min-height: calc(100svh - 60px); }
-    .hero__air-grid { padding-block: var(--space-6) var(--space-6); row-gap: var(--space-4); }
-    .hero__title { line-height: 1.08; }
-    .hero__lede { grid-column: 1 / -1; }
-    .hero__water { padding-block: var(--space-5) var(--space-7); }
-    .hero__water-grid { row-gap: var(--space-4); }
-    .hero__cta { padding-top: 0; }
-    .hero__cta :global(.hero__btn) { display: flex; width: 100%; }
-    .hero__phones { column-gap: var(--space-5); }
+    .hero__grid { padding-top: var(--space-5); row-gap: var(--space-4); }
+    .hero__row { gap: var(--space-4); }
+    .hero__card { grid-template-columns: minmax(0, 1fr); }
+    .hero__photo { max-width: none; aspect-ratio: 395 / 332; border-radius: var(--radius); order: 2; }
+    .hero__photo :global(img) { object-position: 50% 50%; }
+    .hero__card { order: 1; padding: var(--space-5); gap: var(--space-4); }
+    .hero__act { display: contents; }
+    .hero__card :global(.hero__btn) { order: -1; }
+    .hero__med { order: 2; }
+    .figures { margin-top: var(--space-5); }
+    .figures__list { padding-block: var(--space-5); column-gap: var(--space-4); }
+    .figure { padding-inline: var(--space-4) 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero__contacts { animation: none; }
+    .hero__photo :global(img), .hero__card, .figure::before { animation: none; }
   }
 </style>

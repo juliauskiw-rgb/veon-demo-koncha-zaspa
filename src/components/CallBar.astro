@@ -4,7 +4,7 @@ import Button from "./Button.astro";
 import { reception } from "../data/site";
 ---
 <div class="callbar" data-callbar data-rec="U-R004">
-  <Button href={`tel:${reception.phones[0].tel}`} tone="water" full>Зателефонувати на ресепшн</Button>
+  <Button href={`tel:${reception.phones[0].tel}`} tone="action" full>Зателефонувати на ресепшн</Button>
 </div>
 
 <style>
@@ -13,7 +13,7 @@ import { reception } from "../data/site";
     .callbar {
       display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
       padding: var(--space-2) var(--space-4) calc(var(--space-2) + env(safe-area-inset-bottom));
-      background: var(--color-water); border-top: var(--line) solid var(--color-brand);
+      background: var(--color-surface); border-top: var(--line) solid var(--color-brand); box-shadow: var(--shadow-md);
       transition: transform 250ms var(--ease-out);
     }
     .callbar.is-hidden { transform: translateY(100%); visibility: hidden; transition: transform 250ms var(--ease-out), visibility 0s linear 250ms; }

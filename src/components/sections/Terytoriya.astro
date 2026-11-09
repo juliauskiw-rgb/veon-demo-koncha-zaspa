@@ -1,61 +1,89 @@
 ---
 import Section from "../Section.astro";
-import WaterLine from "../WaterLine.astro";
 import FutureLink from "../FutureLink.astro";
-import DistanceDiagram from "../DistanceDiagram.astro";
+import Picture from "../Picture.astro";
 import { FUTURE } from "../../data/site";
 
+// B-F010 facts: a title and one plain line each.
 const facts = [
-  "Лісопаркова зона на березі озер",
-  "Басейн",
-  "Тенісний корт і спортмайданчики",
-  "Скандинавська ходьба з інструкторами",
-  "Марковані маршрути територією",
+  { t: "Лісопаркова зона", d: "на березі озер, у межах Києва" },
+  { t: "Басейн", d: "критий, з доріжками для плавання" },
+  { t: "Тенісний корт", d: "на території санаторію" },
+  { t: "Спортмайданчики", d: "для занять просто неба" },
+  { t: "Скандинавська ходьба", d: "з інструкторами" },
+  { t: "Марковані маршрути", d: "для прогулянок лісом" },
 ];
 ---
-<Section id="terytoriya" class="terytoriya">
-  <div class="air air--after-shoal terytoriya__air">
-    <div class="container grid terytoriya__grid">
-      <h2 class="h-display terytoriya__h" data-reveal>46,5 гектара лісу й озер</h2>
-      <figure class="terytoriya__photo">
-        <img src={`${import.meta.env.BASE_URL}img/ozero-mistok.webp`} width="576" height="178" loading="lazy" decoding="async" alt="Осінній ліс і місток над озером" />
+<Section id="terytoriya" class="block terytoriya">
+  <div class="container grid terytoriya__grid">
+    <div class="head terytoriya__head" data-reveal>
+      <h2 class="h-section">46,5 гектара лісу й озер у Києві</h2>
+    </div>
+    <p class="terytoriya__lede lede" data-reveal style="--reveal-delay: 60ms">Лісопаркова зона на березі озер, близько 20 км від центру.</p>
+
+    <div class="strip" data-reveal style="--reveal-delay: 60ms">
+      <figure class="strip__item">
+        <div class="photo strip__photo"><Picture name="lis-teritoriya" width={215} height={220} alt="Ліс на території санаторію" /></div>
+        <figcaption>Ліс на території</figcaption>
       </figure>
-    </div>
-  </div>
-  <WaterLine />
-  <div class="water terytoriya__water">
-    <div class="container grid terytoriya__lower">
-      <div class="terytoriya__map">
-        <DistanceDiagram />
-      </div>
-      <div class="terytoriya__facts">
-        <ul class="rule-list terytoriya__list">
-          {facts.map((f) => <li>{f}</li>)}
-        </ul>
-        <FutureLink note={FUTURE}>Про санаторій</FutureLink>
+      <figure class="strip__item strip__item--wide">
+        <div class="photo strip__photo"><Picture name="ozero-mistok" width={576} height={178} alt="Місток над озером у лісі" /></div>
+        <figcaption>Місток над озером</figcaption>
+      </figure>
+      <div class="strip__item strip__fact">
+        <p class="strip__n nums">~20 км</p>
+        <p class="strip__t">від центру Києва; від метро «Видубичі» автобус № 43</p>
       </div>
     </div>
+
+    <ul class="facts">
+      {facts.map((f) => (
+        <li class="fact">
+          <strong class="fact__t">{f.t}</strong>
+          <span class="fact__d">{f.d}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="terytoriya__more"><FutureLink note={FUTURE}>Про санаторій</FutureLink></p>
   </div>
 </Section>
 
 <style>
-  .terytoriya__air { padding-bottom: 0; }
-  .terytoriya__grid { align-items: start; row-gap: var(--space-6); }
-  .terytoriya__h { grid-column: 1 / span 6; padding-bottom: var(--space-7); }
-  .terytoriya__photo { grid-column: 7 / -1; align-self: end; justify-self: end; width: 100%; max-width: 576px; margin: 0; }
-  .terytoriya__photo img { width: 100%; height: auto; aspect-ratio: 576 / 178; object-fit: cover; }
+  .terytoriya__grid { row-gap: var(--space-6); align-items: end; }
+  .terytoriya__head { grid-column: 1 / span 7; }
+  .terytoriya__lede { grid-column: 8 / -1; }
 
-  .terytoriya__water { padding-block: var(--space-9) var(--section-gap); }
-  .terytoriya__lower { row-gap: var(--space-8); align-items: start; }
-  .terytoriya__map { grid-column: 1 / span 5; }
-  .terytoriya__facts { grid-column: 7 / -1; display: grid; gap: var(--space-6); justify-items: start; }
-  .terytoriya__list { font-family: var(--font-display); font-size: var(--text-title); line-height: 1.2; width: 100%; }
+  .strip { display: grid; grid-template-columns: minmax(0, 215px) minmax(0, 576px) minmax(0, 1fr); gap: var(--space-4); }
+  .strip__item { margin: 0; display: grid; gap: var(--space-2); align-content: start; }
+  .strip__photo { height: 178px; }
+  .strip figcaption { font-size: var(--text-small); color: var(--color-muted); }
+  .strip__fact {
+    height: 178px; align-content: end; padding: var(--space-5); border-radius: var(--radius);
+    background: var(--color-deep); color: var(--color-on-deep);
+  }
+  .strip__n { font-family: var(--font-display); font-size: var(--text-figure); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .strip__t { font-size: var(--text-small); color: var(--color-on-deep-muted); }
+
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-5); row-gap: var(--space-5); padding-top: var(--space-3); }
+  .fact { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: var(--space-3); row-gap: var(--space-1); }
+  .fact::before { content: ""; grid-row: 1; width: 16px; height: 3px; margin-top: 0.75em; background: var(--color-brand); }
+  .fact__t { grid-column: 2; font-weight: 600; }
+  .fact__d { grid-column: 2; color: var(--color-muted); font-size: var(--text-small); }
+  .terytoriya__more { margin-top: calc(-1 * var(--space-3)); }
 
   @media (max-width: 1023px) {
-    .terytoriya__h, .terytoriya__photo, .terytoriya__map, .terytoriya__facts { grid-column: 1 / -1; }
-    .terytoriya__h { padding-bottom: 0; }
+    .terytoriya__head, .terytoriya__lede { grid-column: 1 / -1; }
+    .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .strip__item--wide { grid-column: 1 / -1; grid-row: 1; }
+    .strip__item--wide .strip__photo { height: auto; max-width: 576px; aspect-ratio: 576 / 178; }
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 767px) {
-    .terytoriya__water { padding-block: var(--space-8) var(--section-gap); }
+    .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+    .strip__item--wide { grid-column: 1 / -1; grid-row: 1; }
+    .strip__item--wide .strip__photo { height: auto; aspect-ratio: 576 / 178; }
+    .strip__photo, .strip__fact { height: auto; aspect-ratio: 1 / 1; }
+    .strip__fact { padding: var(--space-4); }
+    .facts { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

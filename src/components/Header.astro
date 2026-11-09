@@ -16,7 +16,7 @@ const main = reception.phones[0];
     </nav>
     <div class="header__actions">
       <a class="header__phone" href={`tel:${main.tel}`}><span class="visually-hidden">Ресепшн: </span>{main.display}</a>
-      <Button href={`tel:${main.tel}`} tone="light" class="header__call" icon={false}>Зателефонувати</Button>
+      <Button href={`tel:${main.tel}`} tone="action" class="header__call" icon={false}>Зателефонувати</Button>
       <p class="lang header__lang"><span class="lang__current" aria-current="true">UA</span><FutureLink note={FUTURE} class="lang__other">RU</FutureLink></p>
       <a class="header__icon-call" href={`tel:${main.tel}`} data-rec="U-R004" aria-label="Зателефонувати на ресепшн">
         <PhoneIcon size={22} />
@@ -48,9 +48,9 @@ const main = reception.phones[0];
 </header>
 
 <style>
-  .site-header { position: sticky; top: 0; z-index: 50; background: var(--color-bg); border-bottom: 1px solid transparent; transition: border-color var(--dur-fast) var(--ease-out); }
-  .site-header.is-scrolled { border-bottom-color: var(--color-border); }
-  .header__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-height: 72px; }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--color-bg); border-bottom: 1px solid transparent; transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+  .site-header.is-scrolled { border-bottom-color: var(--color-border); box-shadow: var(--shadow-md); }
+  .header__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-height: 76px; }
   .header__nav { display: none; }
   .header__nav ul { display: flex; gap: var(--space-6); }
   .header__nav a, .header__phone {
@@ -74,7 +74,7 @@ const main = reception.phones[0];
 
   .header__icon-call, .burger {
     display: none; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0;
-    border: 0; border-radius: var(--radius); background: transparent; color: var(--color-text); cursor: pointer;
+    border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--color-text); cursor: pointer;
   }
   .header__icon-call { background: var(--color-action); color: var(--color-action-ink); }
   .header__icon-call:hover { background: var(--color-action-hover); }
@@ -89,33 +89,33 @@ const main = reception.phones[0];
   :global(.js) .burger { display: inline-flex; }
 
   .menu {
-    position: fixed; inset: 72px 0 0 0; z-index: 49; overflow-y: auto;
-    background: var(--color-water); color: var(--color-on-water);
+    position: fixed; inset: 76px 0 0 0; z-index: 49; overflow-y: auto;
+    background: var(--color-deep); color: var(--color-on-deep);
     border-top: var(--line) solid var(--color-brand);
   }
   .menu[hidden] { display: none; }
   .menu__inner { display: grid; gap: var(--space-7); padding-block: var(--space-7) var(--space-9); }
   .menu__nav { display: grid; gap: var(--space-1); }
-  .menu__nav a { display: flex; align-items: center; min-height: 52px; font-family: var(--font-display); font-size: var(--text-title); line-height: 1.1; text-decoration: none; }
-  .menu__nav a:hover { color: var(--color-on-water-muted); }
+  .menu__nav a { display: flex; align-items: center; min-height: 52px; font-family: var(--font-display); font-weight: 600; font-size: var(--text-title); line-height: 1.1; text-decoration: none; }
+  .menu__nav a:hover { color: var(--color-on-deep-muted); }
   .menu__nav a:active { color: var(--color-brand); }
-  .menu a:focus-visible, .menu :global(.future-link:focus-visible) { outline-color: var(--color-focus-water); }
+  .menu a:focus-visible, .menu :global(.future-link:focus-visible) { outline-color: var(--color-focus-deep); }
   .menu__contacts { display: grid; gap: var(--space-2); justify-items: start; }
-  .menu__role { font-size: var(--text-small); color: var(--color-on-water-muted); margin-top: var(--space-3); }
+  .menu__role { font-size: var(--text-small); color: var(--color-on-deep-muted); margin-top: var(--space-3); }
   .menu__role:first-child { margin-top: 0; }
   .menu__phone { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--text-title); font-variant-numeric: tabular-nums; text-decoration: none; }
-  .menu__mail { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-3); color: var(--color-on-water-muted); }
+  .menu__mail { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-3); color: var(--color-on-deep-muted); }
   .menu__phone:hover, .menu__mail:hover { color: var(--color-brand); }
-  .menu__phone:active, .menu__mail:active { color: var(--color-on-water); }
-  .menu__lang .lang__current { color: var(--color-on-water); }
-  .menu__lang :global(.lang__other) { color: var(--color-on-water-muted); }
+  .menu__phone:active, .menu__mail:active { color: var(--color-on-deep); }
+  .menu__lang .lang__current { color: var(--color-on-deep); }
+  .menu__lang :global(.lang__other) { color: var(--color-on-deep-muted); }
 
   @media (max-width: 767px) {
-    .header__row { min-height: 60px; gap: var(--space-3); }
+    .header__row { min-height: 64px; gap: var(--space-3); }
     .header__actions { gap: var(--space-2); }
     .header__actions :global(.header__call) { display: none; }
     .header__icon-call { display: inline-flex; }
-    .menu { inset-block-start: 60px; }
+    .menu { inset-block-start: 64px; }
   }
   @media (min-width: 1180px) {
     .header__nav { display: block; }
